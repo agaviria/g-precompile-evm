@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"math/big"
+	"crypto/md5"
 
 	"github.com/ava-labs/subnet-evm/accounts/abi"
 	"github.com/ava-labs/subnet-evm/precompile/contract"
@@ -99,6 +100,8 @@ func hashWithMD5(accessibleState contract.AccessibleState, caller common.Address
 	_ = inputStruct // CUSTOM CODE OPERATES ON INPUT
 
 	var output [16]byte // CUSTOM CODE FOR AN OUTPUT
+	output = md5.Sum([]byte(inputStruct))
+
 	packedOutput, err := PackHashWithMD5Output(output)
 	if err != nil {
 		return nil, remainingGas, err
